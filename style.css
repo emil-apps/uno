@@ -1,4 +1,5 @@
 html { margin: 0 }
+img { -webkit-user-drag: none;}
 
 body{
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -6,7 +7,8 @@ body{
     color: white;
 }
 
-body.loading .loader-container div { display: block }
+body.loading *:not(.loader-container) { display: none }
+body.loading .loader-container div { display: block !important }
 
 .loader-container{
     position: fixed;
@@ -36,4 +38,79 @@ body.loading .loader-container div { display: block }
     to{
         transform: rotate(1turn);
     }
+}
+
+@keyframes new_card_player{
+    0%{ transform: translateY(-100px); }
+    100% { transform: translateY(0);}
+}
+
+@keyframes new_card_enemy{
+    0%{ transform: translateY(+100px); }
+    100% { transform: translateY(0);}
+}
+
+.inv{
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.inv#inventory_player{
+    bottom: -70px;
+}
+
+.inv#inventory_enemy{
+    top: -70px;
+}
+
+.inv img{
+    width: 100px;
+    transition: 0.3s;
+}
+
+@keyframes horz_shaking
+{
+    0% { transform: translateX(0) }
+    25% { transform: translateX(5px) }
+    50% { transform: translateX(-5px) }
+    75% { transform: translateX(5px) }
+    100% { transform: translateX(0) }
+}
+
+.inv img.shake{
+    animation: horz_shaking 0.35s infinite;
+}
+
+.inv#inventory_player img{
+    animation: new_card_player 0.7s;
+    cursor: pointer;
+}
+
+.inv#inventory_enemy img{
+    animation: new_card_enemy 0.7s;
+    cursor: not-allowed;
+}
+
+.inv#inventory_player img:hover{
+    transform: translateY(-30%);
+}
+
+.inv.not-your-turn{
+    pointer-events: none;
+}
+
+.inv.not-your-turn img{
+    filter: grayscale(1);
+}
+
+.stack{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
